@@ -1,13 +1,11 @@
 import React from 'react';
-import logo, { ReactComponent } from './logo.svg';
-import './App.css';
-import Product from "./components/product"
+import Product from "./productComponent/product"
 
 
 function App() {
   return (
     <div className="App">
-      <Product/>
+      <Product></Product>
     </div>
   );
 }
