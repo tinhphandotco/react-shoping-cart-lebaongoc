@@ -67,11 +67,7 @@ export class Product extends Component {
         </div>
         <div className="wrap2">
           <button
-            style={{
-              display:
-                this.state.err === true ? "block" : "none "
-            }}
-            style={{ display: this.state.products.length >= 23 ? 'none' : 'block' }} 
+            style={{ display: this.state.products.length >= 23 || this.state.err === false ? 'none' : 'block' }} 
             className="btnLoadMore"
             onClick={() => this.loadMore()}
           >
