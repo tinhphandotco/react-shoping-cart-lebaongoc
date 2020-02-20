@@ -27,6 +27,7 @@ export class Product extends Component {
       url: `http://localhost:3001/users?_limit=4`
     })
       .then(item => {
+        console.log(item)
         this.setState({ products: item.data });
       })
       .catch(this.state.err = true);
@@ -35,12 +36,12 @@ export class Product extends Component {
     if(this.state.a !== prevState.a)
     axios({
       method: "get",
-      url: `http://localhost:3001/users?_limit=${this.state.a}`
+      url: `http://localhost:3001/users?_page=${this.state.a/4}&_limit=4`
     })
       .then(item => {
         this.setState({ products: item.data });
       })
-      .catch(err => alert("err"));
+      .catch(this.state.err = true);
   }
   render() {
     const product = this.state.products.map(product => {
@@ -48,6 +49,7 @@ export class Product extends Component {
         <div key={product.id}>
           <img
             src={"image/" + product.image}
+            alt="anh san pham"
             height="300px"
             width="300px"
           />
