@@ -27,7 +27,7 @@ export class Product extends Component {
       url: `http://localhost:3001/users?_limit=4`
     })
       .then(item => {
-        console.log(item)
+        console.log(item,"b")
         this.setState({ products: item.data });
       })
       .catch(this.state.err = true);
@@ -39,7 +39,8 @@ export class Product extends Component {
       url: `http://localhost:3001/users?_page=${this.state.a/4}&_limit=4`
     })
       .then(item => {
-        this.setState({ products: item.data });
+        this.setState({ products: this.state.products.concat(item.data) });
+        console.log(this.state.products,"didmount")
       })
       .catch(this.state.err = true);
   }
@@ -50,8 +51,8 @@ export class Product extends Component {
           <img
             src={"image/" + product.image}
             alt="anh san pham"
-            height="300px"
-            width="300px"
+            height="400px"
+            width="400px"
           />
           <br />
           id: {product.id} <br />
@@ -72,6 +73,7 @@ export class Product extends Component {
               display:
                 this.state.err === true ? "block" : "none "
             }}
+            style={{ display: this.state.products.length >= 23 ? 'none' : 'block' }} 
             className="btnLoadMore"
             onClick={() => this.loadMore()}
           >
