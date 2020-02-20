@@ -27,7 +27,6 @@ export class Product extends Component {
       url: `http://localhost:3001/users?_limit=4`
     })
       .then(item => {
-        console.log(item,"b")
         this.setState({ products: item.data });
       })
       .catch(this.state.err = true);
@@ -40,7 +39,6 @@ export class Product extends Component {
     })
       .then(item => {
         this.setState({ products: this.state.products.concat(item.data) });
-        console.log(this.state.products,"didmount")
       })
       .catch(this.state.err = true);
   }
