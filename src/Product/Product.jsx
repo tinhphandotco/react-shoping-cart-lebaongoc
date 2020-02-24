@@ -1,82 +1,73 @@
 import React, { Component } from "react";
 import axios from "axios";
-import "./product.css";
+import "./Product.css"
+import ProductItem from "./ProductItem"
 
+const maxItem = 23;
+const minItem =0;
 export class Product extends Component {
   constructor() {
     super();
     this.state = {
-      products: [
-        {
-          id: "",
-          name: "",
-          price: ""
-        }
-      ],
-      a: 4,
-      err:false
+      products: [],
+      page:1,
     };
-    this.loadMore = this.loadMore.bind(this);
-  }
-  loadMore() {
-    this.setState({ a: this.state.a + 4 });
   }
   componentDidMount() {
     axios({
       method: "get",
-      url: `http://localhost:3001/users?_limit=4`
+      url: `http://localhost:3001/users?_page=${this.state.page}&_limit=4`
     })
       .then(item => {
         this.setState({ products: item.data });
       })
-      .catch(this.state.err = true);
+      .catch( function error(){
+        var Error= 
+        '<div class="err"> ERROR: LOI KHONG LAY DUOC DU LIEU </div>';
+         document.getElementById('root').innerHTML = Error;
+    }
+      );
   }
-  componentDidUpdate(prevProps,prevState){
-    if(this.state.a !== prevState.a)
+  loadMore() {
+    let isPage = this.state.page ;
     axios({
       method: "get",
-      url: `http://localhost:3001/users?_page=${this.state.a/4}&_limit=4`
+      url: `http://localhost:3001/users?_page=${isPage+1}&_limit=4`
     })
       .then(item => {
         this.setState({ products: this.state.products.concat(item.data) });
+        this.state.page++
       })
-      .catch(this.state.err = true);
+      .catch(function error(){
+        var Error= 
+        '<div class="err"> ERROR: BI NGAT KET NOI VOI SERVER </div>';
+         document.getElementById('root').innerHTML = Error;
+    });
   }
+
   render() {
     const product = this.state.products.map(product => {
       return (
-        <div key={product.id}>
-          <img
-            src={"image/" + product.image}
-            alt="anh san pham"
-            height="400px"
-            width="400px"
-          />
-          <br />
-          id: {product.id} <br />
-          name: {product.name} <br />
-          price: {product.price} <br />
-          <button className="btnAdd">Add to cart</button>
-        </div>
-      );
+        <ProductItem key={product.id} product={product}></ProductItem>
+      )
   })
-    return (
-      <div>
-        <div className="wrap">
-          {this.state.err === true ? product : "KHONG CO HANG"}
-        </div>
-        <div className="wrap2">
-          <button
-            style={{ display: this.state.products.length >= 23 || this.state.err === false ? 'none' : 'block' }} 
-            className="btnLoadMore"
-            onClick={() => this.loadMore()}
-          >
-            LoadMore
-          </button>
-        </div>
+  return(
+    <div>
+      <div className="wrap">
+        {product}
       </div>
-    );
-  }
+      <div className="wrap2">
+      <button
+        style={{ display: this.state.products.length >= maxItem || this.state.products.length === minItem ? 'none' : 'block' }} 
+        className="btnLoadMore"
+        onClick={() => this.loadMore()}
+      >
+        LoadMore
+      </button>
+    </div>
+  </div>
+  )
+}
 }
 
 export default Product;
