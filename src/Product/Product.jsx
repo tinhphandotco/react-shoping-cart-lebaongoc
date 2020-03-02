@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import axios from "axios";
 import "./Product.css"
 import ProductItem from "./ProductItem"
+import {getProduct} from "../API/Product.api"
 
 const maxItem = 23;
 const minItem = 0;
@@ -17,10 +17,7 @@ export class Product extends Component {
     };
   }
   componentDidMount() {
-    axios({
-      method: "get",
-      url: `http://localhost:3001/users?_page=${this.state.page}&_limit=4`
-    })
+   getProduct({})
       .then(item => {
         this.setState({ products: item.data });
       })
@@ -29,18 +26,14 @@ export class Product extends Component {
       });
   }
   loadMore() {
-    let {isPage} = this.state;
-    axios({
-      method: "get",
-      url: `http://localhost:3001/users?_page=${isPage + 1}&_limit=4`
-    })
+   getProduct({})
       .then(item => {
         this.setState({ isLoading: true });
         setTimeout(() => {
           this.setState({ isLoading: false })
           this.setState({ products: this.state.products.concat(item.data) });
           this.setState({ page: this.state.page + 1 });
-        }, 4000);
+        }, 2000);
       })
       .catch(() => {
         this.setState({ error: true })
