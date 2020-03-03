@@ -20,8 +20,12 @@ export class ProductItem extends Component {
   }
 
   addToCart = () => {
-    this.props.addToCart(this.state.count)
+    this.props.addToCart(this.state.count, this.props.product.id);
   }
+  // handleClick = (event) => {
+  //   const id = event.target.id;
+  //   console.log(id);
+  // }
 
   render() {
     const { image, id, name, price } = this.props.product
@@ -36,7 +40,8 @@ export class ProductItem extends Component {
           <button className="numberProduct">{this.state.count}</button>
           <button onClick={this.plus}>+</button>
         </div>
-        <button className="btnAdd" onClick={() => this.addToCart(this.state.count)}>Add to cart</button>
+        <button className="btnAdd" id={this.props.product.id} onClick={() => this.addToCart(this.state.count, this.props.product.id)}>Add to cart</button>
+        {/* <button className="btnAdd" id={this.props.product.id} onClick={this.handleClick}>Add to cart</button> */}
       </div>
     )
   }

@@ -5,7 +5,6 @@ import { getProduct } from "../API/Product.api"
 import {
   Link
 } from "react-router-dom";
-import Card from "../Card/card";
 
 const maxItem = 23;
 const minItem = 0;
@@ -18,14 +17,10 @@ export class Product extends Component {
       isLoading: false,
       error: false,
       numberProduct: 0,
-      card: 
-        {
-          productID:"",
-          quantity: 0
-        }
+      card: []
     };
   }
-  
+
   componentDidMount() {
     getProduct({})
       .then(item => {
@@ -37,7 +32,7 @@ export class Product extends Component {
   }
 
   loadMore() {
-    getProduct(this.state.page +1)
+    getProduct(this.state.page + 1)
       .then(item => {
         this.setState({ isLoading: true });
         setTimeout(() => {
@@ -51,21 +46,19 @@ export class Product extends Component {
       });
   }
 
-  addToCart = (item) => {
-    if (item === 0) {}
-    else
-    {
-      this.setState(prevState => {
-        let card = Object.assign({}, prevState.card); 
-        console.log(card,"card")      
-        console.log(prevState,"prevState")
-        card.quantity += item;                                           
-        return {card}                                      
-      }, () => {
-        this.setState({ numberProduct: this.state.numberProduct + 1 });
-      })
+  addToCart = (numberItem, idItem) => {
+    if (numberItem === 0){ alert("vui long nhap so luong san pham")}
+    else {
+      let card2 = Object.assign([], this.state.card);
+      let isExist = card2.findIndex(x => x.idItem === idItem)
+      if (isExist === -1) {
+        card2 = card2.concat({ numberItem: numberItem, idItem: idItem })
+        this.setState({ numberProduct: this.state.numberProduct + 1 })
+      }
+      else card2[isExist].numberItem += numberItem
+      this.setState({ card: card2 })
+    }
   }
-}
 
   render() {
     const product = this.state.products.map(product => {
@@ -109,7 +102,5 @@ export class Product extends Component {
       )
   }
 }
-
-
 
 export default Product;

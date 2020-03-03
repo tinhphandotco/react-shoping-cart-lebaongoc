@@ -14,7 +14,7 @@ ReactDOM.render((
   <Router>
       <Route path="/" exact component={App} />
       <Route path="/Card/card" exact component={Card} />
-      <Route path="/" exact component={Product}/>
+      <Route path="/s" exact component={Product}/>
   </Router>
 ), document.getElementById('root'));
 
