@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import "./Product.css"
 import ProductItem from "./ProductItem"
-import {getProduct} from "../API/Product.api"
+import { getProduct } from "../API/Product.api"
+import {
+  Link
+} from "react-router-dom";
+import Card from "../Card/card";
 
 const maxItem = 23;
 const minItem = 0;
@@ -13,11 +17,17 @@ export class Product extends Component {
       page: 1,
       isLoading: false,
       error: false,
-      numberProduct: 0
+      numberProduct: 0,
+      card: 
+        {
+          productID:"",
+          quantity: 0
+        }
     };
   }
+  
   componentDidMount() {
-   getProduct({})
+    getProduct({})
       .then(item => {
         this.setState({ products: item.data });
       })
@@ -25,8 +35,9 @@ export class Product extends Component {
         this.setState({ error: true })
       });
   }
+
   loadMore() {
-   getProduct({})
+    getProduct(this.state.page +1)
       .then(item => {
         this.setState({ isLoading: true });
         setTimeout(() => {
@@ -39,9 +50,23 @@ export class Product extends Component {
         this.setState({ error: true })
       });
   }
-  addToCart = () => {
-    this.setState({ numberProduct: this.state.numberProduct + 1 })
+
+  addToCart = (item) => {
+    if (item === 0) {}
+    else
+    {
+      this.setState(prevState => {
+        let card = Object.assign({}, prevState.card); 
+        console.log(card,"card")      
+        console.log(prevState,"prevState")
+        card.quantity += item;                                           
+        return {card}                                      
+      }, () => {
+        this.setState({ numberProduct: this.state.numberProduct + 1 });
+      })
   }
+}
+
   render() {
     const product = this.state.products.map(product => {
       return (
@@ -52,17 +77,17 @@ export class Product extends Component {
         />
       )
     })
-    const  {isLoading}  = this.state;
+    const { isLoading } = this.state;
     if (this.state.error) {
       return <div className="err">ERROR : KHONG CO SAN PHAM</div>
     } else
       return (
         <div>
           <div>
-            <a href="http://google.com">
+            <Link to="/Card/card">
               <img className="iconCart" src="./image/54302312-shopping-cart-icon.jpg" alt="iconCart" />
-              {this.state.numberProduct}
-            </a>
+            </Link>
+            {this.state.numberProduct}
           </div>
           <div className="wrap">
             {product}
@@ -84,5 +109,7 @@ export class Product extends Component {
       )
   }
 }
+
+
 
 export default Product;
