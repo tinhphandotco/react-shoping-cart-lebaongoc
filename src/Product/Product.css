@@ -11,21 +11,6 @@
     justify-content: center;
 }
 
-.btnAdd {
-    padding: 10px 30px 10px 30px;
-    box-shadow: inset 0px 1px 0px 0px #a6827e;
-    background: linear-gradient(to bottom, #7d5d3b 5%, #634b30 100%);
-    background-color: #7d5d3b;
-    border-radius: 3px;
-    border: 1px solid #54381e;
-    display: inline-block;
-    cursor: pointer;
-    color: #ffffff;
-    font-family: Arial;
-    font-size: 13px;
-    margin-top: 5px;
-}
-
 .btnLoadMore {
     padding: 10px 50px 10px 50px;
     margin-top: 30px;

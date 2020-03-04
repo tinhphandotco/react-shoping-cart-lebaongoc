@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import './ProductItem.css'
 export class ProductItem extends Component {
   constructor() {
     super()
@@ -20,9 +20,13 @@ export class ProductItem extends Component {
   }
 
   addToCart = () => {
-    this.props.addToCart(this.props.product.id,this.state.count);
+    this.props.addToCart(this.props.product.id, this.state.count);
   }
-  
+
+  reset=()=>{
+    this.setState({count: 0})
+  }
+
   render() {
     const { image, id, name, price } = this.props.product
     return (
@@ -36,7 +40,10 @@ export class ProductItem extends Component {
           <button className="numberProduct">{this.state.count}</button>
           <button onClick={this.plus}>+</button>
         </div>
-        <button className="btnAdd" id={this.props.product.id} onClick={() => this.addToCart(this.props.product.id,this.state.count)}>Add to cart</button>
+        <button className="btnReset" onClick={this.reset}>Reset number item</button>
+        <div>
+          <button className="btnAdd" id={this.props.product.id} onClick={() => this.addToCart(this.props.product.id, this.state.count)}>Add to cart</button>
+        </div>
       </div>
     )
   }

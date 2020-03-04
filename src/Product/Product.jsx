@@ -47,18 +47,18 @@ export class Product extends Component {
   }
 
   addToCart = (idItem, numberItem) => {
-    if (numberItem === 0){ alert("vui long nhap so luong san pham")}
+    if (numberItem === 0) { alert("vui long nhap so luong san pham") }
     else {
       let card2 = Object.assign([], this.state.card);
       let isExist = card2.findIndex(x => x.idItem === idItem)
       if (isExist === -1) {
-        card2 = card2.concat({idItem: idItem, quantity: numberItem})
+        card2 = card2.concat({ idItem: idItem, quantity: numberItem })
         this.setState({ numberProduct: this.state.numberProduct + 1 })
       }
       else card2[isExist].quantity += numberItem
       this.setState({ card: card2 })
+    }
   }
-}
 
   render() {
     const product = this.state.products.map(product => {
