@@ -24,7 +24,7 @@ export class Product extends Component {
     localStorage.setItem('card', JSON.stringify(this.state.card))
   }
 
-  componentDidMount() {    
+  componentDidMount() {
     getProduct({})
       .then(item => {
         this.setState({ products: item.data });
@@ -59,9 +59,14 @@ export class Product extends Component {
       }
       else card2[isExist].quantity += numberItem
       this.setState({ card: card2 })
-    } 
+    }
   }
 
+  reserCard = () => {
+    this.setState({
+      card: []
+    })
+  }
 
   render() {
     const product = this.state.products.map(product => {
@@ -85,6 +90,7 @@ export class Product extends Component {
             </Link>
             {this.state.card.length}
           </div>
+          <div onClick={this.reserCard}>Reset Cart</div>
           <div className="wrap">
             {product}
           </div>
