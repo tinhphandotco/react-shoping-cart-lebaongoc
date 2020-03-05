@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import Card from './Card/card'
+import Card from './Card/Card'
 import * as serviceWorker from './serviceWorker';
 import {
   BrowserRouter as Router,
@@ -13,7 +13,7 @@ import Product from './Product/Product';
 ReactDOM.render((
   <Router>
       <Route path="/" exact component={App} />
-      <Route path="/Card/card" exact component={Card} />
+      <Route path="/Card/Card" exact component={Card} />
       <Route path="/s" exact component={Product}/>
   </Router>
 ), document.getElementById('root'));

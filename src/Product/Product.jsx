@@ -16,12 +16,15 @@ export class Product extends Component {
       page: 1,
       isLoading: false,
       error: false,
-      numberProduct: 0,
-      card: []
+      card: JSON.parse(localStorage.getItem('card'))
     };
   }
 
-  componentDidMount() {
+  componentDidUpdate() {
+    localStorage.setItem('card', JSON.stringify(this.state.card))
+  }
+
+  componentDidMount() {    
     getProduct({})
       .then(item => {
         this.setState({ products: item.data });
@@ -53,12 +56,12 @@ export class Product extends Component {
       let isExist = card2.findIndex(x => x.idItem === idItem)
       if (isExist === -1) {
         card2 = card2.concat({ idItem: idItem, quantity: numberItem })
-        this.setState({ numberProduct: this.state.numberProduct + 1 })
       }
       else card2[isExist].quantity += numberItem
       this.setState({ card: card2 })
-    }
+    } 
   }
+
 
   render() {
     const product = this.state.products.map(product => {
@@ -77,10 +80,10 @@ export class Product extends Component {
       return (
         <div>
           <div>
-            <Link to="/Card/card">
+            <Link to="/Card/Card">
               <img className="iconCart" src="./image/54302312-shopping-cart-icon.jpg" alt="iconCart" />
             </Link>
-            {this.state.numberProduct}
+            {this.state.card.length}
           </div>
           <div className="wrap">
             {product}

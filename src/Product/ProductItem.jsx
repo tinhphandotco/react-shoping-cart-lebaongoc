@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import './ProductItem.css'
+
 export class ProductItem extends Component {
   constructor() {
     super()
