@@ -68,7 +68,25 @@ export class Product extends Component {
     })
   }
 
+  checkCard() {
+    if (this.state.card === null) {
+      this.setState({
+        card: []
+      })
+    } else {
+      return (
+        <div>
+          <Link to="/Card/Card">
+            <img className="iconCart" src="./image/54302312-shopping-cart-icon.jpg" alt="iconCart" />
+          </Link>
+            {this.state.card.length}
+        </div>
+      )
+    }
+  }
+
   render() {
+    console.log(this.state.card === null)
     const product = this.state.products.map(product => {
       return (
         <ProductItem
@@ -84,12 +102,13 @@ export class Product extends Component {
     } else
       return (
         <div>
-          <div>
+          {/* <div>
             <Link to="/Card/Card">
               <img className="iconCart" src="./image/54302312-shopping-cart-icon.jpg" alt="iconCart" />
             </Link>
             {this.state.card.length}
-          </div>
+          </div> */}
+          {this.checkCard()}
           <div onClick={this.reserCard}>Reset Cart</div>
           <div className="wrap">
             {product}
