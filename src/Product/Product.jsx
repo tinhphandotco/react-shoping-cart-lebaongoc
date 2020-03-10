@@ -16,12 +16,8 @@ export class Product extends Component {
       page: 1,
       isLoading: false,
       error: false,
-      card: JSON.parse(localStorage.getItem('card'))
+      card: JSON.parse(localStorage.getItem('card')),
     };
-  }
-
-  componentDidUpdate() {
-    localStorage.setItem('card', JSON.stringify(this.state.card))
   }
 
   componentDidMount() {
@@ -32,6 +28,10 @@ export class Product extends Component {
       .catch(() => {
         this.setState({ error: true })
       });
+  }
+
+  componentDidUpdate() {
+    localStorage.setItem('card', JSON.stringify(this.state.card))
   }
 
   loadMore() {
@@ -68,25 +68,16 @@ export class Product extends Component {
     })
   }
 
-  checkCard() {
-    if (this.state.card === null) {
-      this.setState({
-        card: []
-      })
-    } else {
-      return (
-        <div>
-          <Link to="/Card/Card">
-            <img className="iconCart" src="./image/54302312-shopping-cart-icon.jpg" alt="iconCart" />
-          </Link>
-            {this.state.card.length}
-        </div>
-      )
-    }
+  showCardLength=()=>{
+    if(this.state.card === null){}
+    return this.setState({
+      card : []
+    },()=>{
+      console.log(this.state.card.length)
+    })
   }
 
   render() {
-    console.log(this.state.card === null)
     const product = this.state.products.map(product => {
       return (
         <ProductItem
@@ -102,13 +93,12 @@ export class Product extends Component {
     } else
       return (
         <div>
-          {/* <div>
+          <div>
             <Link to="/Card/Card">
               <img className="iconCart" src="./image/54302312-shopping-cart-icon.jpg" alt="iconCart" />
             </Link>
             {this.state.card.length}
-          </div> */}
-          {this.checkCard()}
+          </div>
           <div onClick={this.reserCard}>Reset Cart</div>
           <div className="wrap">
             {product}
